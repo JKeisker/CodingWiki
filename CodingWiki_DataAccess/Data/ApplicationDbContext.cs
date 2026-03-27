@@ -12,7 +12,11 @@ namespace CodingWiki_DataAccess.Data
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Book> Books { get; set; }
-        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -35,6 +39,8 @@ namespace CodingWiki_DataAccess.Data
                 new Book { BookId = 5, Title = "Cloudy Forest", ISBN = "90392B33", Price = 40.99m }
             };
             modelBuilder.Entity<Book>().HasData(bookList);
+
+            //modelBuilder.Entity<Author>().Property(p => p.FullName).HasComputedColumnSql("[FirstName] + ' ' + [LastName]");
         }
     }
 }
