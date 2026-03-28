@@ -1,4 +1,5 @@
-﻿using CodingWiki_Model.Models;
+﻿using CodingWiki_DataAccess.FluentConfig;
+using CodingWiki_Model.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,14 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<BookAuthorMap> bookAuthorMaps { get; set; }
         public DbSet<BookDetail> BookDetails { get; set; }
+        //rename to Fluent_BookDetails
+        public DbSet<Fluent_BookDetail> BookDetail_fluent { get; set; }
+        public DbSet<Fluent_Book> Fluent_Books { get; set; }
+        public DbSet<Fluent_Author> Fluent_Authors { get; set; }
+        public DbSet<Fluent_Publisher> Fluent_Publishers { get; set; }
+        public DbSet<Fluent_BookAuthorMap> Fluent_bookAuthorMaps { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -27,8 +35,13 @@ namespace CodingWiki_DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().Property(u => u.Price).HasPrecision(10, 5);
-
             modelBuilder.Entity<BookAuthorMap>().HasKey(u => new { u.Author_Id, u.Book_Id });
+
+            modelBuilder.ApplyConfiguration(new FluentAuthorConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookAuthorMapConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookDetailConfig());
+            modelBuilder.ApplyConfiguration(new FluentPublisherConfig());
 
             modelBuilder.Entity<Book>().HasData(
            new Book { BookId = 1, Title = "Spider Without Duty", ISBN = "123B12", Price = 10.99m, Publisher_Id=1 },
@@ -48,8 +61,6 @@ namespace CodingWiki_DataAccess.Data
                 new Publisher { Publisher_Id = 2, Name = "Pub 2 John", Location = "New York" },
                 new Publisher { Publisher_Id = 3, Name = "Pub 3 Ben", Location = "Hawaii" }
             );
-
-            //modelBuilder.Entity<Author>().Property(p => p.FullName).HasComputedColumnSql("[FirstName] + ' ' + [LastName]");
         }
     }
 }
