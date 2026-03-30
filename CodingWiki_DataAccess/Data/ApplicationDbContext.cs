@@ -1,6 +1,7 @@
 ﻿using CodingWiki_DataAccess.FluentConfig;
 using CodingWiki_Model.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +27,10 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<Fluent_Publisher> Fluent_Publishers { get; set; }
         public DbSet<Fluent_BookAuthorMap> Fluent_bookAuthorMaps { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer("Data Source = HALUCIN8; Database = CodingWiki; Integrated Security = True; Connect Timeout = 30; Encrypt = True; Trust Server Certificate = True; Application Intent = ReadWrite; Multi Subnet Failover = False");
+            options.UseSqlServer("Data Source = HALUCIN8; Database = CodingWiki; Integrated Security = True; Connect Timeout = 30; Encrypt = True; Trust Server Certificate = True; Application Intent = ReadWrite; Multi Subnet Failover = False")
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
