@@ -18,7 +18,75 @@ Console.WriteLine("Hello, World!");
 //AddBook();
 //GetAllBooks();
 //GetBook();
-GetBook2();
+//GetBook2();
+//GetBook3();
+//GetBook4();
+//GetBook5();
+GetAllBooks2();
+
+void GetAllBooks2() //w/o .ToList() appended to context.Books, the query does NOT get executed right away, it execute during iteration
+{
+    using var context = new ApplicationDbContext();
+    var books = context.Books;
+    foreach (var book in books)
+    {
+        Console.WriteLine(book.Title + " - " + book.ISBN);
+    }
+}
+
+
+void GetBook5()
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        var books = context.Books.Where(b => EF.Functions.Like(b.ISBN,"12%"));
+
+        foreach (var book in books)
+        {
+            Console.WriteLine(book.Title + " = " + book.ISBN);
+        }
+
+    }
+    catch (Exception e)
+    {
+
+    }
+}
+
+
+void GetBook4()
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        var books = context.Books.Where(b => b.ISBN.Contains("12"));
+
+        foreach(var book in books)
+        {
+            Console.WriteLine(book.Title + " = " + book.ISBN);
+        }
+
+    }
+    catch (Exception e)
+    {
+
+    }
+}
+
+void GetBook3()
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        var book = context.Books.Single(b=>b.ISBN == "12123B12");
+        Console.WriteLine(book!.Title + " - " + book.ISBN);
+    }
+    catch (Exception e)
+    {
+
+    }
+}
 
 void GetBook2()
 {
