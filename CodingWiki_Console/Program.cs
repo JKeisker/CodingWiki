@@ -16,7 +16,48 @@ Console.WriteLine("Hello, World!");
 //}
 
 //AddBook();
-GetAllBooks();
+//GetAllBooks();
+//GetBook();
+GetBook2();
+
+void GetBook2()
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        var book = context.Books.Find(7);
+        Console.WriteLine(book!.Title + " - " + book.ISBN);
+    }
+    catch (Exception e)
+    {
+
+    }
+}
+
+void GetBook()
+{
+    try
+    {
+        Book? book = null;
+        using var context = new ApplicationDbContext();
+        {
+            //book = context.Books.Where(b => b.Title == "Cookie Jar").FirstOrDefault();
+            book = context.Books.FirstOrDefault(b => b.Title == "Cookie Jar");
+        }
+
+        bool result = context == null;
+
+        if(book == null)
+        {
+            Console.WriteLine("The book was not found");
+        }
+        Console.WriteLine(book!.Title + " - " + book.ISBN);
+    }
+    catch (Exception e)
+    {
+
+    }
+}
 
 void GetAllBooks()
 {
