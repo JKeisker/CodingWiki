@@ -3,6 +3,7 @@ using CodingWiki_DataAccess.Data;
 using CodingWiki_DataAccess.Migrations;
 using CodingWiki_Model.Models;
 using Microsoft.EntityFrameworkCore;
+using static System.Reflection.Metadata.BlobBuilder;
 
 Console.WriteLine("Hello, World!");
 
@@ -24,8 +25,131 @@ Console.WriteLine("Hello, World!");
 //GetBook5();
 //GetAllBooks2();
 //GetBook6();
-GetBook7();
+//GetBook7();
+//GetPagination();
+//UpdateBook();
+//UpdateBook2();
+//DeleteBook();
+//DeleteBookAsync();
+UpdateBookAsync();
+//GetPaginationAsync();
 
+
+
+async void DeleteBookAsync()
+{
+    using var context = new ApplicationDbContext();
+    var book = await context.Books.FindAsync(3);
+    if (book == null)
+    {
+        Console.WriteLine("books is null");
+    }
+    context.Books.Remove(book!);
+    await context.SaveChangesAsync();
+}
+
+async void UpdateBookAsync()
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        var books = await context.Books.Where(b => b.Publisher_Id == 1).ToListAsync();
+
+        foreach (var book in books)
+        {
+            book.Price = 67.55m;
+        }
+        await context.SaveChangesAsync();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine("Exception: No books were found");
+    }
+}
+
+async void GetPaginationAsync() //w/o .ToList() appended to context.Books, the query does NOT get executed right away, it execute during iteration
+{
+    using var context = new ApplicationDbContext();
+
+    var books = await context.Books.Skip(0).Take(2).ToListAsync();
+    foreach (var book in books)
+    {
+        Console.WriteLine(book.Title + " - " + book.ISBN);
+    }
+
+    books = await context.Books.Skip(4).Take(1).ToListAsync();
+    foreach (var book in books)
+    {
+        Console.WriteLine(book.Title + " - " + book.ISBN);
+    }
+}
+
+void DeleteBook()
+{
+    using var context = new ApplicationDbContext();
+    var book = context.Books.Find(4);
+    if (book == null)
+    {
+        Console.WriteLine("books is null");
+    }
+    context.Books.Remove(book!);
+    context.SaveChanges();
+}
+
+void UpdateBook2()
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        var books = context.Books.Where(b=>b.Publisher_Id==1);
+
+        foreach (var book in books)
+        {
+            book.Price = 55.55m;
+        }
+        context.SaveChanges();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine("Exception: No books were found");
+    }
+}
+
+void UpdateBook()
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        var books = context.Books.Find(7);
+        if (books == null)
+        {
+            Console.WriteLine("books is null");
+        }
+        books!.ISBN = "777";
+        context.SaveChanges();
+    }
+    catch (Exception e)
+    {
+
+    }
+}
+
+void GetPagination() //w/o .ToList() appended to context.Books, the query does NOT get executed right away, it execute during iteration
+{
+    using var context = new ApplicationDbContext();
+
+    var books = context.Books.Skip(0).Take(2);
+    foreach (var book in books)                                                     
+    {
+        Console.WriteLine(book.Title + " - " + book.ISBN);
+    }
+
+    books = context.Books.Skip(4).Take(1);
+    foreach (var book in books)
+    {
+        Console.WriteLine(book.Title + " - " + book.ISBN);
+    }
+}
 
 void GetBook7() //w/o .ToList() appended to context.Books, the query does NOT get executed right away, it execute during iteration
 {
