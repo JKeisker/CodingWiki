@@ -22,7 +22,31 @@ Console.WriteLine("Hello, World!");
 //GetBook3();
 //GetBook4();
 //GetBook5();
-GetAllBooks2();
+//GetAllBooks2();
+//GetBook6();
+GetBook7();
+
+
+void GetBook7() //w/o .ToList() appended to context.Books, the query does NOT get executed right away, it execute during iteration
+{
+    using var context = new ApplicationDbContext();
+    var books = context.Books.Where(b=>b.Price>10).OrderBy(b => b.Title).ThenByDescending(b => b.ISBN); //IMPORTANT LESSON: this creates the outcome that was initially expected from 
+    foreach (var book in books)                                                     //GetBook6() method.. After it orders by Title, it then orders by desc ISBN
+    {
+        Console.WriteLine(book.Title + " - " + book.ISBN);
+    }
+}
+
+
+void GetBook6() //w/o .ToList() appended to context.Books, the query does NOT get executed right away, it execute during iteration
+{
+    using var context = new ApplicationDbContext();
+    var books = context.Books.OrderBy(b => b.Title).OrderByDescending(b=>b.ISBN); //IMPORTANT LESSON: when using multiple ORDERBY LINQ statements, it will only 
+    foreach (var book in books)                                                   //consider the LAST OrderBy condition
+    {
+        Console.WriteLine(book.Title + " - " + book.ISBN);
+    }
+}
 
 void GetAllBooks2() //w/o .ToList() appended to context.Books, the query does NOT get executed right away, it execute during iteration
 {
