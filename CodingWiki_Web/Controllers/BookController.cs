@@ -2,6 +2,7 @@
 using CodingWiki_Model.Models;
 using CodingWiki_Model.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 
@@ -45,41 +46,39 @@ namespace CodingWiki_Web.Controllers
             return View(obj);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Upsert(Book obj)
-        //{
-        //    if(ModelState.IsValid)
-        //    {
-        //        if(obj.BookId == 0)
-        //        {
-        //            //create
-        //            await _db.Books.AddAsync(obj);
-        //        }
-        //        else
-        //        {
-        //            //update
-        //            _db.Books.Update(obj);
-        //        }
-        //        await _db.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(obj);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upsert(BookVM obj)
+        {
+            if (obj.Book.BookId == 0)
+            {
+                //create
+                await _db.Books.AddAsync(obj.Book);
+            }
+            else
+            {
+                //update
+                _db.Books.Update(obj.Book);
+            }
 
-        //async public Task<IActionResult> Delete(int id)
-        //{
-        //    Book obj = new();
-        //    obj = _db.Books.FirstOrDefault(u => u.BookId == id);
-        //    if (obj == null)
-        //    {
-        //        return NotFound();
-        //    }
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-        //    _db.Books.Remove(obj);
-        //    await _db.SaveChangesAsync();
+        async public Task<IActionResult> Delete(int id)
+        {
+            Book obj = new();
+            obj = _db.Books.FirstOrDefault(u => u.BookId == id);
 
-        //    return RedirectToAction(nameof(Index));
-        //}   
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Books.Remove(obj);
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
