@@ -20,6 +20,14 @@ namespace CodingWiki_Web.Controllers
         public IActionResult Index()
         {
             List<Book> objList = _db.Books.ToList();
+            foreach (var obj in objList)
+            {
+                //least efficient
+                //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
+
+                //more efficient
+                _db.Entry(obj).Reference(u=>u.Publisher).Load();
+            }
             return View(objList);
         }
 
