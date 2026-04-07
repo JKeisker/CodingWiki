@@ -20,14 +20,24 @@ namespace CodingWiki_Web.Controllers
 
         public IActionResult Index()
         {
-            List<Book> objList = _db.Books.Include(u=>u.Publisher).ToList();
+            //eager loading
+            IQueryable<Book> objList = _db.Books.Include(u => u.Publisher)
+                .Include(u=>u.BookAuthorMap).ThenInclude(u=>u.Author);
+
+            var temp = objList.Where(u => u.BookId == 1).ToList();
+            //List<Book> objList = _db.Books.ToList();
             //foreach (var obj in objList)
             //{
-            //    //least efficient
-            //    //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
+            //    //    //least efficient
+            //    //    //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
 
-            //    //more efficient
-            //    _db.Entry(obj).Reference(u=>u.Publisher).Load();
+            //    //    //more efficient: explicit loading > n+1 problem w/ many hit to db from many queries
+            //    _db.Entry(obj).Reference(u => u.Publisher).Load();
+            //    _db.Entry(obj).Collection(u => u.BookAuthorMap).Load();
+            //    foreach (var bookAuth in obj.BookAuthorMap)
+            //    {
+            //        _db.Entry(bookAuth).Reference(u => u.Author).Load();
+            //    }
             //}
             return View(objList);
         }
