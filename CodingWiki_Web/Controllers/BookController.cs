@@ -21,8 +21,10 @@ namespace CodingWiki_Web.Controllers
         public IActionResult Index()
         {
             //eager loading
-            List<Book> objList = _db.Books.Include(u => u.Publisher)
-                .Include(u=>u.BookAuthorMap).ThenInclude(u=>u.Author).ToList();
+            IQueryable<Book> objList = _db.Books.Include(u => u.Publisher)
+                .Include(u=>u.BookAuthorMap).ThenInclude(u=>u.Author);
+
+            var temp = objList.Where(u => u.BookId == 1).ToList();
             //List<Book> objList = _db.Books.ToList();
             //foreach (var obj in objList)
             //{

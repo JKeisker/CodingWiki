@@ -18,6 +18,6 @@ namespace CodingWiki_Model.Models
         public string Weight { get; set; }
         [ForeignKey("Book")]
         public int Book_Id { get; set; }
-        public Fluent_Book Book { get; set; }
+        public virtual Fluent_Book Book { get; set; }
     }
 }
