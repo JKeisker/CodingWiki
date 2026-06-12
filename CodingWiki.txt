@@ -25,5 +25,6 @@ Reference project: CodingWiki
 	a) set DataAccess project as startup project
 	b) set PMC's Default project = startup project
 	c) PMC: add-migration AddBookToDB
+	d) PMC: update-database
 	
 	
