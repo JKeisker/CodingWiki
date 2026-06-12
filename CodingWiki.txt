@@ -1,4 +1,5 @@
-Object Relational Mapping
+Object Relational Mapping w/ MVC Web App
+Reference project: CodingWiki
 
 1) Create solution w/ 3 projects (.Net7):
 	a) DataAccess
