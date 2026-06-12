@@ -1,0 +1,28 @@
+Object Relational Mapping
+
+1) Create solution w/ 3 projects (.Net7):
+	a) DataAccess
+		-Packages: Microsoft.EntityFrameworkCore.SqlServer(7.0.20)
+			   Microsoft.EntityFrameworkCore.Tools(7.0.20)
+		-Projects: Models
+	b) Models
+		-Packages: Microsoft.AspNetCore.Mvc.ViewFeatures(2.3.9)
+	c) Web
+		-Packages: Microsoft.EntityFrameworkCore.Design(7.0.20)
+			   Microsoft.EntityFrameworkCore.Proxies(7.0.20)
+			   Microsoft.VisualStudio.Web.CodeGeneration.Design(7.0.12)
+		-Projects: Models, DataAccess
+
+
+2) Create ApplicationDbContext.cs in DataAccess project
+	In ApplicationDbContext 
+		a) create DbSet<modelname> for each model that should be a Table in the DB.
+		b) use [Key] data annotation for primary key of table
+		b) add db connection reference in method 'OnConfiguring(...)
+
+3) Add Migration
+	a) set DataAccess project as startup project
+	b) set PMC's Default project = startup project
+	c) PMC: add-migration AddBookToDB
+	
+	
