@@ -1,4 +1,5 @@
-Object Relational Mapping w/ MVC Web App
+Entity Framework Core w/ MVC Web App
+Code-First Migrations
 Reference project: CodingWiki
 
 1) Create solution w/ 3 projects (.Net7):
@@ -23,8 +24,27 @@ Reference project: CodingWiki
 
 3) Add Migration
 	a) set DataAccess project as startup project
-	b) set PMC's Default project = startup project
-	c) PMC: add-migration AddBookToDB
-	d) PMC: update-database
+	b) set PMC's to same project as 'a)' = DataAccess startup project
+	c) Make desired changes to Model project
+	d) PMC: add-migration AddBookToDB
+	e) PMC: update-database
+
+4) Remove Migration (***If you run this AFTER update-database for the migration you want to remove,
+			it will screw up your code)
+	a) ***Important: only use remove-migration when you are unhappy w/ a migration 
+			AND have not pushed it to the DB.
+	b) To remove last migration => remove-migration
+		Now the unwanted migration will removed, and ApplicationDbContextModelSnapshot.cs will have been 
+		updated to previous value/state. ***HOWEVER, in your model, it will still be set to the changes you were
+		trying to set w/ the migration you just removed!!!
 	
+
+
+
+
+
+
+
+
+
 	
