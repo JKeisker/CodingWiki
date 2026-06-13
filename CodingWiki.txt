@@ -40,8 +40,34 @@ Reference project: CodingWiki
 		trying to set w/ the migration you just removed!!!
 	
 
+***5) IF you do run a migration and update-database w/o for example creating a DbSet in ApplicationDbContext,
+	then you must follow these steps:
+	a) Revert DB (roll back to prev state): Update-Database <PreviousMigrationName>
+		***<PreviousMigrationName> : use class name w/o the date/timestamp prefix
+	b) Run : remove-migration
 
+6) NOTE: NEVER arbitrarily remove a migration unless you know what you're doing!
+	ONLY make changes in the models and ApplicationDbContext!!
 
+7) Rolling back to old migrations (ONLY applies to EF Core..AND NEVER DO THIS IN PRODUCTION THE TABLES WILL BE GONE!!!!)
+	a) update-database NameOfMigrationWeWantToGoBackTo
+	b) To return to previous state, just run 'update-database' and all reversions will be undone.
+	
+8) ***Most conservative/safe thing is to just add migrations rather than removing or rolling back. Pretty much
+	every issue can be fixed by simply creating new migrations rather than using other methods.
+
+9) More commands: 
+	a) get-migration
+	b) drop-database
+	c) update-database - after running drop-database, this cmd will bring it back
+
+10) Data Seeding
+	Use ApplicationDbContext => OnModelCreating(ModelBuilder modelBuilder)		
+				    {
+					modelBuilder.Entity<Book>.Property(u=>u.Price).HasPrecision(10,5);
+					modelBuilder.Entity<Book>.HasData(
+						new Book { BookId = 1, Title = "SpiderMan", ISBN = "123B12", Price = 10.99m }
+				    };
 
 
 
