@@ -26,8 +26,9 @@ Reference project: CodingWiki
 	a) set DataAccess project as startup project
 	b) set PMC's to same project as 'a)' = DataAccess startup project
 	c) Make desired changes to Model project
-	d) PMC: add-migration AddBookToDB
-	e) PMC: update-database
+	d) If new table, add as DbSet to ApplicationDbContext
+	e) PMC: add-migration AddBookToDB
+	f) PMC: update-database
 
 4) Remove Migration (***If you run this AFTER update-database for the migration you want to remove,
 			it will screw up your code)
