@@ -2,6 +2,8 @@ Entity Framework Core w/ MVC Web App
 Code-First Migrations
 Reference project: CodingWiki
 
+SECTIONS I & II: INTRO & MIGRATIONS
+--------------------------------------------------------------------------------------------------------------------
 1) Create solution w/ 3 projects (.Net7):
 	a) DataAccess
 		-Packages: Microsoft.EntityFrameworkCore.SqlServer(7.0.20)
@@ -69,7 +71,9 @@ Reference project: CodingWiki
 						new Book { BookId = 1, Title = "SpiderMan", ISBN = "123B12", Price = 10.99m }
 				    };
 
+--------------------------------------------------------------------------------------------------------------------
 
+SECTION III: DATA ANNOTATIONS
 
 
 
