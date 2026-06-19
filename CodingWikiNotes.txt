@@ -96,9 +96,11 @@ Classes copied under 'FluentModels' folder to demo fluent api.
 
 If both Fluent API and Data Annotations are used, if there is any contradiction Fluent API will be used.
 
+Fluent API also includes it's way of creating table relationships, instead of using Data Annotations.
 
-
-
+Rather than clutter everything together in 'OnModelCreating(ModelBuilder modelBuilder)', you can create a 'FluentConfig' folder
+in DataAccess project and add config files for each domain model class. These config classes need to  inherit from 
+IEntityTypeConfiguration<(table model name)>.. See other config schema elements from examples in this CodingWiki solution.
 
 
 
