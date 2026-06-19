@@ -88,6 +88,23 @@ Security Warning: If your project generates an .env file containing connection s
 
 --------------------------------------------------------------------------------------------------------------------
 
+SECTION V: FLUENT API
+
+Definition - Fluent API is another way to configure the domain classes aside from 'Data Annotations'.
+To use Fluent API, you need to do that in the ApplicationDbContext method 'OnModelCreating(ModelBuilder modelBuilder)' override.
+Classes copied under 'FluentModels' folder to demo fluent api.
+
+If both Fluent API and Data Annotations are used, if there is any contradiction Fluent API will be used.
+
+
+
+
+
+
+
+
+
+
 
 
 	
