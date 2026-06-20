@@ -124,12 +124,24 @@ Use .Contains function when searching for a string or substring value - it will 
 Use Like function to set more precise sql-like searches => context.Books.Where(u=>EF.Functions.Like(u.ISBN, "12%"));
 You can use EF.Functions.  to build multi-layered sql-like search as well
 
+Interesting to know: 'var books = context.Books.ToList();' - the ToList() forces query execution right away the list is set to books
+		     'var books = context.Books;' will not execute until the books variable iteration occurs in the 'foreach' loop (deferred 
+		      execution)
+
+When you have multiple .OrderBy and/or .OrderByDescending functions, only the last will be executed and the previous will be ignored! :)
+You must use .ThenBy or .ThenByDescending to have multiple ordering conditions
+
+For implementation of Pagination on website, use Skip() and Take()
 
 
+To update db records: 1) retrieve record : var books = context.Books.Find(1003); 
+		      2) set new value: books.ISBN = "777";
+	              3) save changes to db: context.SaveChanges();
 
+To delete a db item: 1) context.Books.Remove(book);
+		     2) context.SaveChanges();
 
-
-
+	
 
 
 
