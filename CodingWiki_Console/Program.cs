@@ -1,23 +1,22 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using CodingWiki_DataAccess.Data;
-using CodingWiki_DataAccess.Migrations;
-using CodingWiki_Model.Models;
 using Microsoft.EntityFrameworkCore;
-using static System.Reflection.Metadata.BlobBuilder;
 
 Console.WriteLine("Hello, World!");
+
+
 
 //using (ApplicationDbContext context = new())
 //{
 //    context.Database.EnsureCreated();
-//    if(context.Database.GetPendingMigrations().Count() > 0)
+//    if (context.Database.GetPendingMigrations().Count() > 0)
 //    {
 //        context.Database.Migrate();
 //    }
 //}
 
 //AddBook();
-//GetAllBooks();
+GetAllBooks();
 //GetBook();
 //GetBook2();
 //GetBook3();
@@ -275,15 +274,15 @@ Console.WriteLine("Hello, World!");
 //    }
 //}
 
-//void GetAllBooks()
-//{
-//    using var context = new ApplicationDbContext();
-//    var books = context.Books.ToList();
-//    foreach(var book in books)
-//    {
-//        Console.WriteLine(book.Title + " - " + book.ISBN);
-//    }
-//}
+void GetAllBooks()
+{
+    using var context = new ApplicationDbContext();
+    var books = context.Books.ToList();
+    foreach (var book in books)
+    {
+        Console.WriteLine(book.Title + " - " + book.ISBN);
+    }
+}
 
 //void AddBook()
 //{
