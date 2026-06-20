@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using CodingWiki_DataAccess.Data;
+using CodingWiki_Model.Models;
 using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Hello, World!");
@@ -16,8 +17,8 @@ Console.WriteLine("Hello, World!");
 //}
 
 //AddBook();
-GetAllBooks();
-//GetBook();
+//GetAllBooks();
+GetBook();
 //GetBook2();
 //GetBook3();
 //GetBook4();
@@ -249,40 +250,43 @@ GetAllBooks();
 //    }
 //}
 
-//void GetBook()
-//{
-//    try
-//    {
-//        Book? book = null;
-//        using var context = new ApplicationDbContext();
-//        {
-//            //book = context.Books.Where(b => b.Title == "Cookie Jar").FirstOrDefault();
-//            book = context.Books.FirstOrDefault(b => b.Title == "Cookie Jar");
-//        }
-
-//        bool result = context == null;
-
-//        if(book == null)
-//        {
-//            Console.WriteLine("The book was not found");
-//        }
-//        Console.WriteLine(book!.Title + " - " + book.ISBN);
-//    }
-//    catch (Exception e)
-//    {
-
-//    }
-//}
-
-void GetAllBooks()
+void GetBook()
 {
-    using var context = new ApplicationDbContext();
-    var books = context.Books.ToList();
-    foreach (var book in books)
+    try
     {
-        Console.WriteLine(book.Title + " - " + book.ISBN);
+        List<Book> book;
+        using var context = new ApplicationDbContext();
+        {
+            book = context.Books.Where(b => b.Publisher_Id == 2).ToList();
+            //book = context.Books.FirstOrDefault(b => b.Title == "Cookie Jar");
+        }
+
+        bool result = context == null;
+
+        if (book == null)
+        {
+            Console.WriteLine("The book was not found");
+        }
+        foreach (var b in book)
+        {
+            Console.WriteLine(b!.Title + " - " + b.ISBN);
+        }
+    }
+    catch (Exception e)
+    {
+
     }
 }
+
+//void GetAllBooks()
+//{
+//    using var context = new ApplicationDbContext();
+//    var books = context.Books.ToList();
+//    foreach (var book in books)
+//    {
+//        Console.WriteLine(book.Title + " - " + book.ISBN);
+//    }
+//}
 
 //void AddBook()
 //{
