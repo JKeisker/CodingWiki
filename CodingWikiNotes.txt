@@ -107,7 +107,7 @@ If both Fluent API and Data Annotations are used w/ a particular model entity, i
 These hybrid model entities might not need their own config as above and just have fluent api elements added directly under OnModelCreating().
 
 
-Section VI: FILTERING QUERY
+SECTION VI: FILTERING QUERY
 
 Good examples in Console app of common db queries using dbcontext, LINQ w/ C# for EF Core.
 
@@ -142,7 +142,20 @@ To delete a db item: 1) context.Books.Remove(book);
 		     2) context.SaveChanges();
 
 	
+SECTION VII: EF CORE CRUD
 
+1) Register services in CodingWiki_Web's Program.cs file
+
+   builder.Services.AddDbContext<ApplicationDbContext>(options =>
+   {
+       options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+   });
+
+2) Add DB connection string to appsettings.json and comment out connection string in ApplicationDbContext
+
+3) add constructor to ApplicationDbContext that passes option to base class:
+
+	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
 
 
