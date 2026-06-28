@@ -196,7 +196,8 @@ chp 72 - Retrieve using EF Core
     		_db = db;
 	}
 	
-
+   ----------------------
+   View logging here:  Debug -> Windows -> Output
 
 
 
