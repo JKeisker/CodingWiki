@@ -200,7 +200,7 @@ chp 72 - Retrieve using EF Core
    View logging here:  Debug -> Windows -> Output
 
 
-
+chps 73-82 : PRACTICE CRUD operations w/o copying and pasting
 
 
 
