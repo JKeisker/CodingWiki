@@ -18,7 +18,7 @@ Console.WriteLine("Hello, World!");
 
 //AddBook();
 //GetAllBooks();
-GetBook();
+//GetBook();
 //GetBook2();
 //GetBook3();
 //GetBook4();
@@ -250,33 +250,33 @@ GetBook();
 //    }
 //}
 
-void GetBook()
-{
-    try
-    {
-        List<Book> book;
-        using var context = new ApplicationDbContext();
-        {
-            book = context.Books.Where(b => b.Publisher_Id == 2).ToList();
-            //book = context.Books.FirstOrDefault(b => b.Title == "Cookie Jar");
-        }
+//void GetBook()
+//{
+//    try
+//    {
+//        List<Book> book;
+//        using var context = new ApplicationDbContext();
+//        {
+//            book = context.Books.Where(b => b.Publisher_Id == 2).ToList();
+//            //book = context.Books.FirstOrDefault(b => b.Title == "Cookie Jar");
+//        }
 
-        bool result = context == null;
+//        bool result = context == null;
 
-        if (book == null)
-        {
-            Console.WriteLine("The book was not found");
-        }
-        foreach (var b in book)
-        {
-            Console.WriteLine(b!.Title + " - " + b.ISBN);
-        }
-    }
-    catch (Exception e)
-    {
+//        if (book == null)
+//        {
+//            Console.WriteLine("The book was not found");
+//        }
+//        foreach (var b in book)
+//        {
+//            Console.WriteLine(b!.Title + " - " + b.ISBN);
+//        }
+//    }
+//    catch (Exception e)
+//    {
 
-    }
-}
+//    }
+//}
 
 //void GetAllBooks()
 //{

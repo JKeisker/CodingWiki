@@ -144,6 +144,8 @@ To delete a db item: 1) context.Books.Remove(book);
 	
 SECTION VII: EF CORE CRUD
 
+chp70 - Setup EF Core in Web Project:
+
 1) Register services in CodingWiki_Web's Program.cs file
 
    builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -157,8 +159,43 @@ SECTION VII: EF CORE CRUD
 
 	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
+4) Comment-out DB access in ApplicationDbContext's 'OnConfiguring' method
 
 
+chp71 - Seed Category & Logging in EF Core:
+
+(alternative to seeding data in AppDBContext's OnModelCreating())
+
+1) add-migration seedCategory1 ***empty migration
+			       ***since we now have setup DB connection from appsettings.json and other steps above in
+				  "Setup MVC Web App to use EF Core", and have commented out access from ApplicationDbContext's
+				  'OnConfiguring' method, WE NOW SET CodingWiki_Web as the startup app, but in PMC still have 
+				   Default project set to CodingWiki_DataAccess
+
+2) In 'Up' method of empty migration, write insert statements: migrationBuilder.Sql("INSERT INTO Categories VALUES ('Cat 6')");
+
+3) In PMC run 'Update-Database'
+
+
+***Drawback of above migration seeding approach - if at some point you decide to delete all migrations and add a new migration, you
+may forget the migrations that were manually seeded as example above. That is why the preferred approach is always to simply
+seed data and create migrations from AppDBContext's OnModelCreating()
+
+4) Add 'Logging' config to appsettings.json
+
+
+chp 72 - Retrieve using EF Core
+
+   Create new controller in CodingWiki_Web
+   At top reference AppDBContext and set instance w/ dependency injection : 
+
+	private readonly ApplicationDbContext _db;
+
+	public CategoryController(ApplicationDbContext db)
+	{
+    		_db = db;
+	}
+	
 
 
 
