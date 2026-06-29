@@ -203,10 +203,20 @@ chp 72 - Retrieve using EF Core
 chps 73-82 : PRACTICE CRUD operations w/o copying and pasting
 
 
+SECTION VIII : BOOK MANAGMENT
 
+chp 84. Projections in EF Core --> BookController.cs line 47
+	
+	BookVM obj = new();
+	obj.PublisherList = _db.Publishers.Select(i => new SelectListItem 
+	{ 
+    		Text = i.Name,
+    		Value = i.Publisher_Id.ToString()
+	});
 
-
-
+chp 87. Explicit Loading in EF Core, see BookController, search text 'explicit'
+	
+chp 91 Eager Loading, see BookController search text 'eager'
 
 
 

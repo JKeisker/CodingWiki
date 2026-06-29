@@ -25,20 +25,7 @@ namespace CodingWiki_Web.Controllers
                 .Include(u=>u.BookAuthorMap).ThenInclude(u=>u.Author);
 
             var temp = objList.Where(u => u.BookId == 1).ToList();
-            //List<Book> objList = _db.Books.ToList();
-            //foreach (var obj in objList)
-            //{
-            //    //    //least efficient
-            //    //    //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
 
-            //    //    //more efficient: explicit loading > n+1 problem w/ many hit to db from many queries
-            //    _db.Entry(obj).Reference(u => u.Publisher).Load();
-            //    _db.Entry(obj).Collection(u => u.BookAuthorMap).Load();
-            //    foreach (var bookAuth in obj.BookAuthorMap)
-            //    {
-            //        _db.Entry(bookAuth).Reference(u => u.Author).Load();
-            //    }
-            //}
             return View(objList);
         }
 
