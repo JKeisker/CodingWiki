@@ -218,6 +218,20 @@ chp 87. Explicit Loading in EF Core, see BookController, search text 'explicit'
 	
 chp 91 Eager Loading, see BookController search text 'eager'
 
+chp 93. IQueryable interface inherits from IEnumerable
+
+	Difference:
+	IEnumerable returns all records and filter is applied in memory
+	vs.
+	IQueryable returns filtered records
+
+
+
+
+
+
+
+
 
 
 	
