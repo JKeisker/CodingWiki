@@ -1,16 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using CodingWiki_DataAccess.Data;
-using CodingWiki_DataAccess.Migrations;
 using CodingWiki_Model.Models;
 using Microsoft.EntityFrameworkCore;
-using static System.Reflection.Metadata.BlobBuilder;
 
 Console.WriteLine("Hello, World!");
+
+
 
 //using (ApplicationDbContext context = new())
 //{
 //    context.Database.EnsureCreated();
-//    if(context.Database.GetPendingMigrations().Count() > 0)
+//    if (context.Database.GetPendingMigrations().Count() > 0)
 //    {
 //        context.Database.Migrate();
 //    }
@@ -254,20 +254,23 @@ Console.WriteLine("Hello, World!");
 //{
 //    try
 //    {
-//        Book? book = null;
+//        List<Book> book;
 //        using var context = new ApplicationDbContext();
 //        {
-//            //book = context.Books.Where(b => b.Title == "Cookie Jar").FirstOrDefault();
-//            book = context.Books.FirstOrDefault(b => b.Title == "Cookie Jar");
+//            book = context.Books.Where(b => b.Publisher_Id == 2).ToList();
+//            //book = context.Books.FirstOrDefault(b => b.Title == "Cookie Jar");
 //        }
 
 //        bool result = context == null;
 
-//        if(book == null)
+//        if (book == null)
 //        {
 //            Console.WriteLine("The book was not found");
 //        }
-//        Console.WriteLine(book!.Title + " - " + book.ISBN);
+//        foreach (var b in book)
+//        {
+//            Console.WriteLine(b!.Title + " - " + b.ISBN);
+//        }
 //    }
 //    catch (Exception e)
 //    {
@@ -279,7 +282,7 @@ Console.WriteLine("Hello, World!");
 //{
 //    using var context = new ApplicationDbContext();
 //    var books = context.Books.ToList();
-//    foreach(var book in books)
+//    foreach (var book in books)
 //    {
 //        Console.WriteLine(book.Title + " - " + book.ISBN);
 //    }

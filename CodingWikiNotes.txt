@@ -88,6 +88,153 @@ Security Warning: If your project generates an .env file containing connection s
 
 --------------------------------------------------------------------------------------------------------------------
 
+SECTION V: FLUENT API
+
+Definition - Fluent API is another way to configure the domain classes aside from 'Data Annotations'.
+To use Fluent API, you need to do that in the ApplicationDbContext method 'OnModelCreating(ModelBuilder modelBuilder)' override.
+Classes copied under 'FluentModels' folder to demo fluent api.
+
+Fluent API also includes it's way of creating table relationships, instead of using Data Annotations.
+
+Rather than clutter everything together in 'OnModelCreating(ModelBuilder modelBuilder)', you can create a 'FluentConfig' folder
+in DataAccess project and add config files for each domain model class. These config classes need to  inherit from 
+IEntityTypeConfiguration<(table model name)>.. See other config schema elements from examples in this CodingWiki solution.
+
+Then under 'OnModelCreating(ModelBuilder modelBuilder', you only need to reference each fluid api config w/ 
+modelBuilder.ApplyConfiguration(...)
+
+If both Fluent API and Data Annotations are used w/ a particular model entity, if there is any contradiction Fluent API will be used.
+These hybrid model entities might not need their own config as above and just have fluent api elements added directly under OnModelCreating().
+
+
+SECTION VI: FILTERING QUERY
+
+Good examples in Console app of common db queries using dbcontext, LINQ w/ C# for EF Core.
+
+Important note: when using dbcontext and EF Core, parameters should be set to variables and then variable used in query - for security
+purposes
+
+Use .Find function to retrieve record by primary key
+
+When you expect on 1 item returned from query, you can use .Single or .SingleOrDefault.. if more than 1 item is found, it will
+return an exception
+
+Use .Contains function when searching for a string or substring value - it will return all matches
+
+Use Like function to set more precise sql-like searches => context.Books.Where(u=>EF.Functions.Like(u.ISBN, "12%"));
+You can use EF.Functions.  to build multi-layered sql-like search as well
+
+Interesting to know: 'var books = context.Books.ToList();' - the ToList() forces query execution right away the list is set to books
+		     'var books = context.Books;' will not execute until the books variable iteration occurs in the 'foreach' loop (deferred 
+		      execution)
+
+When you have multiple .OrderBy and/or .OrderByDescending functions, only the last will be executed and the previous will be ignored! :)
+You must use .ThenBy or .ThenByDescending to have multiple ordering conditions
+
+For implementation of Pagination on website, use Skip() and Take()
+
+
+To update db records: 1) retrieve record : var books = context.Books.Find(1003); 
+		      2) set new value: books.ISBN = "777";
+	              3) save changes to db: context.SaveChanges();
+
+To delete a db item: 1) context.Books.Remove(book);
+		     2) context.SaveChanges();
+
+	
+SECTION VII: EF CORE CRUD
+
+chp70 - Setup EF Core in Web Project:
+
+1) Register services in CodingWiki_Web's Program.cs file
+
+   builder.Services.AddDbContext<ApplicationDbContext>(options =>
+   {
+       options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+   });
+
+2) Add DB connection string to appsettings.json and comment out connection string in ApplicationDbContext
+
+3) add constructor to ApplicationDbContext that passes option to base class:
+
+	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+
+4) Comment-out DB access in ApplicationDbContext's 'OnConfiguring' method
+
+
+chp71 - Seed Category & Logging in EF Core:
+
+(alternative to seeding data in AppDBContext's OnModelCreating())
+
+1) add-migration seedCategory1 ***empty migration
+			       ***since we now have setup DB connection from appsettings.json and other steps above in
+				  "Setup MVC Web App to use EF Core", and have commented out access from ApplicationDbContext's
+				  'OnConfiguring' method, WE NOW SET CodingWiki_Web as the startup app, but in PMC still have 
+				   Default project set to CodingWiki_DataAccess
+
+2) In 'Up' method of empty migration, write insert statements: migrationBuilder.Sql("INSERT INTO Categories VALUES ('Cat 6')");
+
+3) In PMC run 'Update-Database'
+
+
+***Drawback of above migration seeding approach - if at some point you decide to delete all migrations and add a new migration, you
+may forget the migrations that were manually seeded as example above. That is why the preferred approach is always to simply
+seed data and create migrations from AppDBContext's OnModelCreating()
+
+4) Add 'Logging' config to appsettings.json
+
+
+chp 72 - Retrieve using EF Core
+
+   Create new controller in CodingWiki_Web
+   At top reference AppDBContext and set instance w/ dependency injection : 
+
+	private readonly ApplicationDbContext _db;
+
+	public CategoryController(ApplicationDbContext db)
+	{
+    		_db = db;
+	}
+	
+   ----------------------
+   View logging here:  Debug -> Windows -> Output
+
+
+chps 73-82 : PRACTICE CRUD operations w/o copying and pasting
+
+
+SECTION VIII : BOOK MANAGMENT
+
+chp 84. Projections in EF Core --> BookController.cs line 47
+	
+	BookVM obj = new();
+	obj.PublisherList = _db.Publishers.Select(i => new SelectListItem 
+	{ 
+    		Text = i.Name,
+    		Value = i.Publisher_Id.ToString()
+	});
+
+chp 87. Explicit Loading in EF Core, see BookController, search text 'explicit'
+	
+chp 91 Eager Loading, see BookController search text 'eager'
+
+chp 93. IQueryable interface inherits from IEnumerable
+
+	Difference:
+	IEnumerable returns all records and filter is applied in memory
+	vs.
+	IQueryable returns filtered records
+
+
+chp 100 Lazy Loading Related Data
+	1) To enable Lazy Loading, you need to install nuget package: Microsoft.EntityFrameworkCore.Proxies
+		in the CodingWiki_Web project 
+	2) and then configure in Program.cs : 				 	options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+	3) Make all related properties in all the models 'virtual' properties
+
+
+
+
 
 
 	

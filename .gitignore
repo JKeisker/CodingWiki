@@ -400,3 +400,6 @@ FodyWeavers.xsd
 
 # Entity Framework Core
 dab-options.json
+# EF Core Power Tools
+*.dgml
+

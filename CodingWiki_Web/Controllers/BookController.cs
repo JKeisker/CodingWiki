@@ -20,25 +20,34 @@ namespace CodingWiki_Web.Controllers
 
         public IActionResult Index()
         {
-            //eager loading
-            IQueryable<Book> objList = _db.Books.Include(u => u.Publisher)
-                .Include(u=>u.BookAuthorMap).ThenInclude(u=>u.Author);
 
-            var temp = objList.Where(u => u.BookId == 1).ToList();
+
+            //worst loading
             //List<Book> objList = _db.Books.ToList();
             //foreach (var obj in objList)
             //{
-            //    //    //least efficient
-            //    //    //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
+            //    obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
+            //}
 
-            //    //    //more efficient: explicit loading > n+1 problem w/ many hit to db from many queries
+            //explicit loading (better)
+            //List<Book> objList = _db.Books.ToList();
+            //foreach (var obj in objList)
+            //{
             //    _db.Entry(obj).Reference(u => u.Publisher).Load();
             //    _db.Entry(obj).Collection(u => u.BookAuthorMap).Load();
-            //    foreach (var bookAuth in obj.BookAuthorMap)
+            //    foreach(var bookAuth in obj.BookAuthorMap)
             //    {
             //        _db.Entry(bookAuth).Reference(u => u.Author).Load();
             //    }
             //}
+
+            //eager loading
+            List<Book> objList = _db.Books.Include(u => u.Publisher)
+                .Include(u=>u.BookAuthorMap).ThenInclude(u=>u.Author).ToList();
+
+            //IQueryable<Book> objList = _db.Books.Include(u => u.Publisher)
+            //    .Include(u => u.BookAuthorMap).ThenInclude(u => u.Author);
+
             return View(objList);
         }
 

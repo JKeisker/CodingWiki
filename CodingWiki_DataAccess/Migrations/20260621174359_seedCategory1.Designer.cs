@@ -4,6 +4,7 @@ using CodingWiki_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingWiki_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260621174359_seedCategory1")]
+    partial class seedCategory1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.17")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -48,48 +54,6 @@ namespace CodingWiki_DataAccess.Migrations
                     b.HasKey("Author_Id");
 
                     b.ToTable("Authors");
-
-                    b.HasData(
-                        new
-                        {
-                            Author_Id = 1,
-                            BirthDate = new DateTime(1965, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Bill",
-                            LastName = "Shakespeare",
-                            Location = "Chicago"
-                        },
-                        new
-                        {
-                            Author_Id = 2,
-                            BirthDate = new DateTime(1975, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Larry",
-                            LastName = "Bird",
-                            Location = "Chicago"
-                        },
-                        new
-                        {
-                            Author_Id = 3,
-                            BirthDate = new DateTime(1987, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Tom",
-                            LastName = "Barrett",
-                            Location = "Chicago"
-                        },
-                        new
-                        {
-                            Author_Id = 4,
-                            BirthDate = new DateTime(1945, 4, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Betty",
-                            LastName = "Thomas",
-                            Location = "Chicago"
-                        },
-                        new
-                        {
-                            Author_Id = 5,
-                            BirthDate = new DateTime(1955, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Shanna",
-                            LastName = "Leon",
-                            Location = "Chicago"
-                        });
                 });
 
             modelBuilder.Entity("CodingWiki_Model.Models.Book", b =>
