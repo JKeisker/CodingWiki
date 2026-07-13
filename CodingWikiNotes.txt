@@ -226,8 +226,11 @@ chp 93. IQueryable interface inherits from IEnumerable
 	IQueryable returns filtered records
 
 
-
-
+chp 100 Lazy Loading Related Data
+	1) To enable Lazy Loading, you need to install nuget package: Microsoft.EntityFrameworkCore.Proxies
+		in the CodingWiki_Web project 
+	2) and then configure in Program.cs : 				 	options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+	3) Make all related properties in all the models 'virtual' properties
 
 
 
