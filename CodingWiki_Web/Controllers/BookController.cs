@@ -30,19 +30,20 @@ namespace CodingWiki_Web.Controllers
             //}
 
             //explicit loading (better)
-            List<Book> objList = _db.Books.ToList();
-            foreach (var obj in objList)
-            {
-                _db.Entry(obj).Reference(u => u.Publisher).Load();
-                _db.Entry(obj).Collection(u => u.BookAuthorMap).Load();
-                foreach(var bookAuth in obj.BookAuthorMap)
-                {
-                    _db.Entry(bookAuth).Reference(u => u.Author).Load();
-                }
-            }
+            //List<Book> objList = _db.Books.ToList();
+            //foreach (var obj in objList)
+            //{
+            //    _db.Entry(obj).Reference(u => u.Publisher).Load();
+            //    _db.Entry(obj).Collection(u => u.BookAuthorMap).Load();
+            //    foreach(var bookAuth in obj.BookAuthorMap)
+            //    {
+            //        _db.Entry(bookAuth).Reference(u => u.Author).Load();
+            //    }
+            //}
 
             //eager loading
-            //List<Book> objList = _db.Books.Include(u=>u.Publisher).ToList();
+            List<Book> objList = _db.Books.Include(u => u.Publisher)
+                .Include(u=>u.BookAuthorMap).ThenInclude(u=>u.Author).ToList();
 
             //IQueryable<Book> objList = _db.Books.Include(u => u.Publisher)
             //    .Include(u => u.BookAuthorMap).ThenInclude(u => u.Author);
