@@ -33,8 +33,8 @@ namespace CodingWiki_DataAccess.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            //options.UseSqlServer("Data Source = HALUCIN8; Database = CodingWiki; Integrated Security = True; Connect Timeout = 30; Encrypt = True; Trust Server Certificate = True; Application Intent = ReadWrite; Multi Subnet Failover = False")
-            //    .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
+            options.UseSqlServer("Data Source = HALUCIN8; Database = CodingWiki; Integrated Security = True; Connect Timeout = 30; Encrypt = True; Trust Server Certificate = True; Application Intent = ReadWrite; Multi Subnet Failover = False")
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,6 +65,14 @@ namespace CodingWiki_DataAccess.Data
            new Publisher { Publisher_Id = 1, Name = "Pub 1 Jimmy", Location = "Chicago" },
                 new Publisher { Publisher_Id = 2, Name = "Pub 2 John", Location = "New York" },
                 new Publisher { Publisher_Id = 3, Name = "Pub 3 Ben", Location = "Hawaii" }
+            );
+
+            modelBuilder.Entity<Author>().HasData(
+           new Author { Author_Id = 1, BirthDate = new DateTime(1965, 12, 5), FirstName = "Bill", LastName = "Shakespeare", Location = "Chicago" },
+                new Author { Author_Id = 2, BirthDate = new DateTime(1975, 9, 9), FirstName = "Larry", LastName = "Bird", Location = "Chicago" },
+                new Author { Author_Id = 3, BirthDate = new DateTime(1987, 5, 15), FirstName = "Tom", LastName = "Barrett", Location = "Chicago" },
+                new Author { Author_Id = 4, BirthDate = new DateTime(1945, 4, 6), FirstName = "Betty", LastName = "Thomas", Location = "Chicago" },
+                new Author { Author_Id = 5, BirthDate = new DateTime(1955, 1, 7), FirstName = "Shanna", LastName = "Leon", Location = "Chicago" }
             );
         }
     }
