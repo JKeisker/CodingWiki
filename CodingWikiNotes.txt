@@ -1,4 +1,5 @@
-Entity Framework Core w/ MVC Web App
+Udemy.com Course: Entity Framework Core - The Complete Guide
+Description: Entity Framework Core w/ MVC Web App
 Code-First Migrations
 Reference project: CodingWiki
 
