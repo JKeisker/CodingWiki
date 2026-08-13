@@ -233,9 +233,17 @@ chp 100 Lazy Loading Related Data
 	2) and then configure in Program.cs : 				 	options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 	3) Make all related properties in all the models 'virtual' properties
 
+chp 104 Create View and Stored Proc
+	
+	* create view and stored procs w/ migration
+	* create view that has no key => .HasNoKey()
+	* create view that does not become a db table => .ToView("GetMainBookDetails");
+	* when table has no key, always will not track and be readonly
 
+chp 106 Raw SQL
 
-
+	use 'FromSQLRaw'
+	    'FromSQLInterpolated'
 
 
 	

@@ -199,11 +199,23 @@ namespace CodingWiki_Web.Controllers
 
         async public Task<IActionResult> Playground()
         {
-            IEnumerable<Book> BookList1 = _db.Books;
-            var FilterBook1 = BookList1.Where(b => b.Price > 50).ToList();
 
-            IQueryable<Book> BookList2 = _db.Books;
-            var filteredBook2 = BookList2.Where(b => b.Price > 50).ToList();
+            //view and sproc
+            //var viewList = _db.MainBookDetails.ToList();
+            //var viewList1 = _db.MainBookDetails.FirstOrDefault();
+            //var viewList2 = _db.MainBookDetails.Where(u => u.Price > 30);
+
+            //raw sql
+            var bookRaw = _db.Books.FromSqlRaw("Select * from dbo.books").ToList();
+            var id = 1;
+            var bookRaw1 = _db.Books.FromSqlInterpolated($"Select * from dbo.books where bookid={id}").ToList();
+            //var bookRaw2 = _db.Books.FromSqlRaw("Select I from dbo.books where bookid={0}", 1).ToList();
+
+            //IEnumerable<Book> BookList1 = _db.Books;
+            //var FilterBook1 = BookList1.Where(b => b.Price > 50).ToList();
+
+            //IQueryable<Book> BookList2 = _db.Books;
+            //var filteredBook2 = BookList2.Where(b => b.Price > 50).ToList();
 
             //var bookTemp = _db.Books.FirstOrDefault();
             //bookTemp.Price = 100;
